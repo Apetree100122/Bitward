@@ -1,6 +1,6 @@
 ﻿using Bit.Core.Models.Business;
 
-namespace Bit.Admin.Models;
+namespace Bit.Admin.Billing.Models;
 
 public class BillingInformationModel
 {

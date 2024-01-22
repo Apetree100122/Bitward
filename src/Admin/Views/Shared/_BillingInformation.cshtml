@@ -1,6 +1,6 @@
 ﻿@using Bit.Admin.Enums;
 @inject Bit.Admin.Services.IAccessControlService AccessControlService
-@model BillingInformationModel
+@model Bit.Admin.Billing.Models.BillingInformationModel
 
 @{
     var canManageTransactions = Model.Entity == "User" ? AccessControlService.UserHasPermission(Permission.User_BillingInformation_CreateEditTransaction) 
