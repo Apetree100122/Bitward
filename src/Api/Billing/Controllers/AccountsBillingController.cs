@@ -4,7 +4,7 @@ using Bit.Core.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bit.Api.Controllers;
+namespace Bit.Api.Billing.Controllers;
 
 [Route("accounts/billing")]
 [Authorize("Application")]
