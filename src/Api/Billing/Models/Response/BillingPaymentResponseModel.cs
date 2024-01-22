@@ -1,7 +1,8 @@
-﻿using Bit.Core.Models.Api;
+﻿using Bit.Api.Models.Response;
+using Bit.Core.Models.Api;
 using Bit.Core.Models.Business;
 
-namespace Bit.Api.Models.Response;
+namespace Bit.Api.Billing.Models.Response;
 
 public class BillingPaymentResponseModel : ResponseModel
 {
