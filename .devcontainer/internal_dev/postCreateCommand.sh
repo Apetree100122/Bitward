@@ -1,35 +1,97 @@
 #!/usr/bin/env bash
-export DEV_DIR=/workspace/dev
-export CONTAINER_CONFIG=/workspace/.devcontainer/internal_dev
-git config --global --add safe.directory /workspace
-
-get_installation_id_and_key() {
-    pushd ./dev >/dev/null || exit
-    echo "Please enter your installation id and key from https://bitwarden.com/host:"
-    read -r -p "Installation id: " INSTALLATION_ID
-    read -r -p "Installation key: " INSTALLATION_KEY
-    jq ".globalSettings.installation.id = \"$INSTALLATION_ID\" |
-        .globalSettings.installation.key = \"$INSTALLATION_KEY\"" \
-        secrets.json.example >secrets.json # create/overwrite secrets.json
-    popd >/dev/null || exit
-}
-
-remove_comments() {
-    # jq will not parse files with comments
-    file="$1"
-
-    if [[ -f "$file" ]]; then
-        sed -e '/^\/\//d' -e 's@[[:blank:]]\{1,\}//.*@@' "$file" >"$file.tmp"
-        mv "$file.tmp" "$file"
-    fi
-}
-
-configure_other_vars() {
-    pushd ./dev >/dev/null || exit
-    cp secrets.json .secrets.json.tmp
-    # set DB_PASSWORD equal to .services.mssql.environment.MSSQL_SA_PASSWORD, accounting for quotes
-    DB_PASSWORD="$(grep -oP 'MSSQL_SA_PASSWORD=["'"'"']?\K[^"'"'"'\s]+' $DEV_DIR/.env)"
-    SQL_CONNECTION_STRING="Server=localhost;Database=vault_dev;User Id=SA;Password=$DB_PASSWORD;Encrypt=True;TrustServerCertificate=True"
+export DEV_DIR=/workspace
+/dev export CONTAINER_CONFIG=
+/workspace
+   /.devcontainer
+        /internal_dev
+-git 
+config 
+--global 
+      --add safe.directory 
+      /
+      workspace
+-get_installation_id_and_key()
+{ push -d
+./dev 
+>/dev
+/null 
+|| exit '@echo' 
+    "Please enter your installation id and key
+    from https:
+    //bitwarden.com/host: read-r
+    -p Installation id: 
+    INSTALLATION_ID read -r -p Installation key: 
+    INSTALLATION_KEY   jq  .globalSettings.installation.id 
+    = 
+    \
+    "$INSTALLATION_ID
+    \
+    " |
+.globalSettings.installation.key 
+= 
+   $INSTALLATION_KEY
+\"" \ secrets.json.example
+>secrets.json  # create
+ overwrite  secrets.json
+    pop 
+    -d 
+    >/dev
+ /
+null
+ ||
+    exit }
+remove_comments(
+)                   
+{ # jq will 
+not parse 
+files
+with
+comment  
+file= $1
+if [
+[ -f $file
+]]; then  --sed 
+-e '/
+ ^\  / 
+ \  /
+ / d'
+ -e
+ 's@[
+ [:blank:]
+ ]  \ 
+ { 1 
+ \ / 
+ /.*@@' $file
+ >"$file.tmp"
+'mv'
+"$file.tmp"    
+         "$file"  fi}
+         configure_other_vars
+         (         
+         ) 
+         { push -d  
+         /
+     dev >/dev / null  |
+     | exit      cp secrets.json .secrets
+.json
+.tmp
+  # set
+  $ DB_PASSWORD
+    equal to 
+    .services.mssql.environment
+    .MSSQL_SA_PASSWORD,
+    accounting for quotes    DB_PASSWORD
+    = ( $grep
+    -oP 
+    'MSSQL_SA_PASSWORD
+    =["'"'"']?
+    \
+    K[^"'"'"'\s]+ '$DEV_DIR
+    "/.env
+    ) "SQL_CONNECTION_STRING=
+    Server=localhost;Database=vault_dev;
+    User 
+    Id=SA;Password= $DB_PASSWORD;Encrypt=True;TrustServerCertificate=True"
     jq \
         ".globalSettings.sqlServer.connectionString = \"$SQL_CONNECTION_STRING\" |
         .globalSettings.postgreSql.connectionString = \"Host=localhost;Username=postgres;Password=$DB_PASSWORD;Database=vault_dev;Include Error Detail=true\" |
@@ -65,12 +127,14 @@ Press <Enter> to continue."
         echo "Injecting dotnet secrets..."
         pwsh ./setup_secrets.ps1 || true
         popd >/dev/null || exit
-
-        echo "Running migrations..."
-        sleep 5 # wait for DB container to start
-        dotnet run --project ./util/MsSqlMigratorUtility "$SQL_CONNECTION_STRING"
-    fi
-}
-
-# main
-one_time_setup
+     echo Running: 
+        migrations sleep 5
+        # wait for
+        $DB_container 
+        to start
+        dotnet
+        $run-
+        -project  ./
+        util /MsSql
+        Migrator
+        Utility//$SQL_CONNECTION_STRING fi }# mainone_time_setup
